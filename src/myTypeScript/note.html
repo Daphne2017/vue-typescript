@@ -1,0 +1,191 @@
+先总结下ES6相关的数组方法：
+**
+1、.map： 映射，一个对一个
+eg: [12, 58, 99, 86, 40, 91]
+[不及格, 不及格, 及格, 及格, 不及格, 及格]
+2、.reduce： 汇总， 一堆出来一个
+算总数
+[12, 8000000, 599999] => 和为：80060011
+算平均数
+[12, 59, 99] => 56.67
+
+3、.filter（fn,thisArg）： 过滤器，按照fn规则，从arr中过滤出一个新数组thisArg，不改变原数组
+其中：fn(value, index, arr)
+value：数组的每一个元素，必选
+index：数组元素的index
+arr：原数组
+
+.some(fn,thisArg)： 过滤器，在arr中找一个符合条件的值，一旦找到返回true，停止遍历，否则返回false，不改变原数组
+其中：fn(value, index, arr)
+value：数组的每一个元素，必选
+index：数组元素的index
+arr：原数组
+
+.every(fn,thisArg)：判断arr中是否所有元素都满足条件，是返回true，遇到一个不满足的即返回false且停止遍历，不改变原数组
+其中：fn(value, index, arr)
+value：数组的每一个元素，必选
+index：数组元素的index
+arr：原数组
+
+4、.forEach（arr） 循环(迭代)，遍历数组中每一个元素
+
+5、.of(arr)：会把传的参数变成一个数组，如果没参数，就返回一个空数组。
+
+6、.copyWithin(target,start,end)：在数组内替换元素，改变原数组，参数表示位置，可以为负数、倒数。
+target：必需。复制到指定目标索引位置，即从哪开始替换
+start：可选。所要复制的元素的起始位置
+end：可选。停止复制的索引位置 (默认为 array.length)。如果为负值，表示倒数。
+例：
+复制数组的前面两个元素到第三和第四个位置上：
+var aa= [“xiaoming”, “xiaohong”, “xiaoxin”, “xiaolan”, “xiaobo”, “xiaoning”];
+aa.copyWithin(2, 0, 2);
+输出结果：
+xiaoming,xiaohong,xiaoming,xiaohong,xiaobo,xiaoning
+
+7、.fill(value, start, end)：用于将一个固定值替换数组的元素
+value：必需。填充的值。
+start：可选。开始填充位置。
+end：可选。停止填充位置 (默认为 array.length)
+例：
+填充 “Runoob” 到数组的最后两个元素：
+var bb= [“we”, “you”, “he”, “she”];
+bb.fill(“together”, 2, 4);
+输出结果：
+we,you,together,together
+
+ES7&&ES8相关数组方法：
+**
+1、.includes(a)：数组是否包含某个东西，a就是要找的东西（如一个字符串）
+.find(fn, thisArg) ：返回第一个找到的符合条件的值
+.findIndex(fn, thisArg ) ：返回第一个找到的符合条件的值的坐标位置
+其中：回调函数fn(value,index,arr)，参数依次为：数组的每一个元素，下标，当前数组
+
+2、数组 keys/values/entries
+
+数组 json
+for…in 下标(key) key
+for…of 值(value) x
+eg :
+keys=>所有的key拿出来 0,1,2,3,4,…
+values=>所有的values拿出来 12,5,8,99,…
+entries=>所有的key-value对拿出来 {key: 0, value: 12}, {key: 1, value: 5}, …
+————————————————
+版权声明：本文为CSDN博主「一天一点@」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_44349573/article/details/89309452
+https://segmentfault.com/a/1190000019131088
+https://www.jianshu.com/p/e1c22e3d731d
+https://segmentfault.com/a/1190000019131088
+Array.of
+copyWithin
+fill
+find 和 findIndex
+includes
+entries、keys、values
+flat
+reduce
+Object.keys（obj）
+返回obj中所有属性的key，组合成一个数组。每一个key为一项。
+Object.values(obj)
+返回obj中所有属性的value，组合成一个数组。每一个value为数组中的一项
+Object.entries
+返回obj中所有key和value，每一个对应的key和value组成一个数组。每个数组在组成一个数组
+且这三个方法拿到的都是自身的属性，拿不到原型上的
+————————————————
+版权声明：本文为CSDN博主「YT!ea」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_39750745/article/details/84310558
+https://blog.csdn.net/u014302759/article/details/78650131 JS中集合对象(Array、Map、Set)及类数组对象的使用与对比
+https://www.cnblogs.com/xiaoyulive/p/7906548.html 
+/* 前言
+
+ES5中的数据结构，主要是用Array和Object。在ES6中主要新增了Set和Map数据结构。到目前为止，常用的数据结构有四种Array、Object、Set、Map。下面话不多说了，来一起看看详细的介绍吧。
+*/
+// 数据结构横向对比，增，查，改，删
+/* 1、map和数组对比 */
+
+{
+let map = new Map();
+let array = [];
+
+/**增**/
+map.set('t', 1);
+array.push({ t: 1 });
+console.info('map-array', map, array);
+
+/**查**/
+let map_exist = map.has('t');
+let array_exist = array.find(item => item.t);
+console.info('map-array', map_exist, array_exist);
+
+/**改**/
+map.set('t', 2);
+array.forEach(item => item.t ? item.t = 2 : '');
+console.info('map-array-modify', map, array);
+
+/**删**/
+map.delete('t');
+let index = array.findIndex(item => item.t);
+array.splice(index, 1);
+console.info('map-array-empty', map, array);
+}
+/* 2、set和数组对比 */
+{
+let set = new Set();
+let array = [];
+
+// 增
+set.add({ t: 1 });
+array.push({ t: 1 });
+console.info('set-array', set, array);
+
+// 查
+let set_exist = set.has({ t: 1 });
+let array_exist = array.find(item => item.t);
+console.info('set-array', set_exist, array_exist);
+
+// 改
+set.forEach(item => item.t ? item.t = 2 : '');
+array.forEach(item => item.t ? item.t = 2 : '');
+console.info('set-array-modify', set, array);
+
+// 删
+set.forEach(item => item.t ? set.delete(item) : '');
+let index = array.findIndex(item => item.t);
+array.splice(index, 1);
+console.info('set-array-empty', set, array);
+}
+/* 3、map、set和Object对比 */
+{
+let item = { t: 1 };
+let map = new Map();
+let set = new Set();
+let obj = {};
+
+// 增
+map.set('t', 1);
+set.add(item);
+obj['t'] = 1;
+console.info('map-set-obj', obj, map, set);
+
+// 查
+console.info({
+map_exist: map.has('t'),
+set_exist: set.has(item),
+obj_exist: 't' in obj
+})
+
+// 改
+map.set('t', 2);
+item.t = 2;
+obj['t'] = 2;
+console.info('map-set-obj-modify', obj, map, set);
+
+// 删除
+map.delete('t');
+set.delete(item);
+delete obj['t'];
+console.info('map-set-obj-empty', obj, map, set);
+}
+/* 通过对比可以发现，能使用map的优先使用，不使用数组，
+考虑数据的唯一性，考虑使用set，不使用Objet
+
+以后的开发中可以优先考虑使用map和set了，并且可以放弃数组和object了 */
